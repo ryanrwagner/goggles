@@ -1,0 +1,81 @@
+! name: Academic Research
+! description: Boosts institutional/archival sources + core research hubs; prefers DOI/PDF; adds major journal platforms; downranks common SEO/social noise.
+! public: false
+! author: Me
+
+! --- Institutional / public-sector signal (match hostnames, not just paths) ---
+/\/\/[^\/]*\.edu(\/|$)/$boost=5
+/\/\/[^\/]*\.ac\.uk(\/|$)/$boost=5
+/\/\/[^\/]*\.edu\.au(\/|$)/$boost=4
+/\/\/[^\/]*\.gov(\/|$)/$boost=4
+/\/\/[^\/]*\.gov\.uk(\/|$)/$boost=4
+
+! --- Archives / libraries ---
+$boost=4,site=archive.org
+$boost=3,site=loc.gov
+$boost=3,site=archives.gov
+
+! --- Core repositories / indexes ---
+$boost=10,site=ncbi.nlm.nih.gov
+$boost=8,site=nlm.nih.gov
+$boost=8,site=arxiv.org
+$boost=8,site=biorxiv.org
+$boost=6,site=jstor.org
+$boost=6,site=doaj.org
+$boost=6,site=semanticscholar.org
+$boost=5,site=openalex.org
+$boost=5,site=core.ac.uk
+$boost=5,site=zenodo.org
+$boost=5,site=osf.io
+
+! --- Major journal platforms (fills the “publisher gap”) ---
+$boost=7,site=nature.com
+$boost=7,site=sciencedirect.com
+$boost=7,site=link.springer.com
+$boost=6,site=springer.com
+$boost=7,site=royalsocietypublishing.org
+
+! (Optional, common “big publishers” you may want later)
+! $boost=6,site=onlinelibrary.wiley.com
+! $boost=6,site=tandfonline.com
+! $boost=6,site=academic.oup.com
+! $boost=6,site=cambridge.org
+! $boost=6,site=sagepub.com
+
+! --- “Research object” patterns ---
+/doi\.org/$boost=10
+/\.pdf([?#]|$)/$boost=5
+
+! Optional PDF-ish patterns for “dynamic” downloads (use only if you like the behavior)
+! /\/pdf(\/|$)/$boost=3
+! /[?&]format=pdf(&|$)/$boost=3
+! /[?&]download=1(&|$)/$boost=2
+
+! --- Noise reduction (discard only the worst offenders; downrank the rest) ---
+$discard,site=quora.com
+$downrank=8,site=medium.com
+$downrank=7,site=forbes.com
+$downrank=6,site=pinterest.com
+$downrank=5,site=reddit.com
+
+! --- Your requested additions: IEEE / ACM / AAAS (incl. EurekAlert) / Tech Review ---
+$boost=10,site=ieeexplore.ieee.org
+$boost=4,site=ieee.org
+$boost=4,site=spectrum.ieee.org
+$boost=5,site=computer.org
+$boost=5,site=publications.computer.org
+/\/\/[^\/]*computer\.org\/csdl\/magazine\/(co|sp|so|ic)(\/|$)/$boost=7
+
+$boost=10,site=dl.acm.org
+$boost=5,site=cacm.acm.org
+$boost=5,site=queue.acm.org
+$boost=3,site=acm.org
+
+$boost=7,site=science.org
+$boost=5,site=aaas.org
+$boost=4,site=eurekalert.org
+
+$boost=3,site=technologyreview.com
+
+! --- ResearchGate: keep neutral, or downrank (recommended given your preference) ---
+$downrank=4,site=researchgate.net
